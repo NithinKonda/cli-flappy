@@ -1,7 +1,7 @@
-"use client"
-// /home/page.js
+"use client";
+
 import React, { useEffect, useState } from "react";
-import { auth } from "@/firebase-config";
+import { auth,db } from "@/firebase-config";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import Link from "next/link";
 
@@ -43,7 +43,7 @@ const HomePage = () => {
           <button onClick={handleSignOut}>Sign Out</button>
           <br />
           <Link href="/game">
-            Game
+            <a style={{ fontSize: "20px", color: "blue", textDecoration: "underline" }}>Game</a>
           </Link>
         </div>
       )}
