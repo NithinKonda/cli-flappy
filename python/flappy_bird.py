@@ -43,3 +43,14 @@ class FlappyBird:
         self.game_over = False
         self.last_update = time.time()
         self.animation_counter = 0
+
+
+    def new_obstacle(self):
+        gap_start = random.randint(3, self.height - self.gap_size - 3)
+        obstacle = {
+            'x': self.width - 1,
+            'gap_start': gap_start,
+            'gap_end': gap_start + self.gap_size,
+            'passed': False
+        }
+        self.obstacles.append(obstacle)
