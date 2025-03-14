@@ -197,6 +197,27 @@ impl FlappyBird {
                 }
             }
         }
+
+        let score_text = format!("Score: {}", self.score);
+        if let Ok(_) = execute!(
+            io::stdout(),
+            cursor::MoveTo(0, 0),
+            style::PrintStyledContent(score_text.with(Color::White))
+        ) {}
+
+        // Draw game over
+        if self.game_over {
+            let game_over_text = "GAME OVER - Press 'r' to restart or 'q' to quit";
+            let x = (self.width.saturating_sub(game_over_text.len() as u16)) / 2;
+            if let Ok(_) = execute!(
+                io::stdout(),
+                cursor::MoveTo(x, self.height / 2),
+                style::PrintStyledContent(game_over_text.with(Color::Red))
+            ) {}
+        }
+
+        io::stdout().flush()
+    }
 }
 
 
