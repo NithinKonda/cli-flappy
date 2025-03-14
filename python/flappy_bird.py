@@ -75,3 +75,31 @@ class FlappyBird:
         
         if len(self.obstacles) == 0 or self.obstacles[-1]['x'] < self.width - 20:
             self.new_obstacle()
+
+
+
+     def flap(self):
+        self.bird_velocity = self.flap_power
+    
+    def draw(self):
+        self.screen.clear()
+        
+        self.screen.addstr(int(self.bird_y), self.bird_x, self.bird_char)
+        
+        for obstacle in self.obstacles:
+            x = int(obstacle['x'])
+            if 0 <= x < self.width:
+                for y in range(obstacle['gap_start']):
+                    self.screen.addstr(y, x, self.obstacle_char)
+                
+                for y in range(obstacle['gap_end'], self.height):
+                    self.screen.addstr(y, x, self.obstacle_char)
+        
+        self.screen.addstr(0, 0, f"Score: {self.score}")
+        
+        if self.game_over:
+            game_over_text = "GAME OVER - Press 'r' to restart or 'q' to quit"
+            x = max(0, (self.width - len(game_over_text)) // 2)
+            self.screen.addstr(self.height // 2, x, game_over_text)
+        
+        self.screen.refresh()
