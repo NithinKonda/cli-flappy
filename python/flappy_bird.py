@@ -78,7 +78,7 @@ class FlappyBird:
 
 
 
-     def flap(self):
+    def flap(self):
         self.bird_velocity = self.flap_power
     
     def draw(self):
