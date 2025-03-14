@@ -114,3 +114,36 @@ class FlappyBird:
                             self.screen.addch(y, x, '·', curses.color_pair(5))
                         except curses.error:
                             pass
+
+
+    def draw(self):
+        self.screen.clear()
+        
+
+        self.draw_background()
+        
+
+        bird_char = self.bird_chars[self.bird_frame]
+        try:
+            if curses.has_colors():
+                self.screen.addstr(int(self.bird_y), self.bird_x, bird_char, curses.color_pair(1))
+            else:
+                self.screen.addstr(int(self.bird_y), self.bird_x, bird_char)
+        except curses.error:
+            pass
+        
+        # Draw obstacles
+        for obstacle in self.obstacles:
+            x = int(obstacle['x'])
+            if 0 <= x < self.width:
+
+                for y in range(obstacle['gap_start']):
+                    if 0 <= y < self.height:
+                        try:
+                            char = self.obstacle_top if y == obstacle['gap_start'] - 1 else self.obstacle_char
+                            if curses.has_colors():
+                                self.screen.addstr(y, x, char, curses.color_pair(2))
+                            else:
+                                self.screen.addstr(y, x, char)
+                        except curses.error:
+                            pass
