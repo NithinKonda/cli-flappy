@@ -100,3 +100,6 @@ class FlappyBird:
 
         if len(self.obstacles) == 0 or self.obstacles[-1]['x'] < self.width - 20:
             self.new_obstacle()
+
+    def flap(self):
+        self.bird_velocity = self.flap_power
