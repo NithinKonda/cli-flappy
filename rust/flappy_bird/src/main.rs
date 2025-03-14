@@ -218,6 +218,43 @@ impl FlappyBird {
 
         io::stdout().flush()
     }
+    fn run(&mut self) -> io::Result<()> {
+        let mut last_update = Instant::now();
+
+        loop {
+            let current_time = Instant::now();
+            let dt = current_time.duration_since(last_update).as_secs_f32();
+            last_update = current_time;
+
+            // Handle input
+            if event::poll(Duration::from_millis(1))? {
+                if let Event::Key(KeyEvent { code, .. }) = event::read()? {
+                    match code {
+                        KeyCode::Char('q') => break,
+                        KeyCode::Char('r') if self.game_over => self.reset_game(),
+                        KeyCode::Char(' ') | KeyCode::Up if !self.game_over => self.flap(),
+                        _ => {}
+                    }
+                }
+            }
+
+            // Update game state
+            if !self.game_over {
+                self.update_bird(dt);
+                self.update_obstacles(dt);
+            }
+
+            // Draw everything
+            self.draw()?;
+
+            self.animation_counter += 1;
+            
+            // Cap frame rate
+            std::thread::sleep(Duration::from_millis(10));
+        }
+
+        Ok(())
+    }
 }
 
 
