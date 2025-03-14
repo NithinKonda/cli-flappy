@@ -1,3 +1,4 @@
+
 use crossterm::{
     cursor,
     event::{self, Event, KeyCode, KeyEvent},
@@ -10,8 +11,6 @@ use std::{
     io::{self, Write},
     time::{Duration, Instant},
 };
-
-
 
 struct FlappyBird {
     width: u16,
@@ -33,14 +32,12 @@ struct FlappyBird {
     animation_counter: u32,
 }
 
-
 struct Obstacle {
     x: f32,
     gap_start: u16,
     gap_end: u16,
     passed: bool,
 }
-
 
 impl FlappyBird {
     fn new() -> io::Result<Self> {
@@ -67,8 +64,6 @@ impl FlappyBird {
         })
     }
 
-
-
     fn reset_game(&mut self) {
         self.bird_y = self.height as f32 / 2.0;
         self.bird_velocity = 0.0;
@@ -90,8 +85,6 @@ impl FlappyBird {
             passed: false,
         });
     }
-
-
 
     fn update_bird(&mut self, dt: f32) {
         self.bird_velocity += self.gravity * dt * 10.0;
@@ -123,7 +116,7 @@ impl FlappyBird {
 
             if self.bird_x >= obstacle.x as u16
                 && self.bird_x <= obstacle.x as u16 + 1
-                && (self.bird_y as u16 < obstacle.gap_start || self.bird_y as u16 >= obstacle.gap_end)
+                && ((self.bird_y as u16) < obstacle.gap_start || (self.bird_y as u16) >= obstacle.gap_end)
             {
                 self.game_over = true;
             }
@@ -136,15 +129,12 @@ impl FlappyBird {
         }
     }
 
-
     fn flap(&mut self) {
         self.bird_velocity = self.flap_power;
     }
 
     fn draw(&self) -> io::Result<()> {
         execute!(io::stdout(), terminal::Clear(ClearType::All))?;
-
-        // Draw background dots
         for y in 0..self.height {
             for x in (0..self.width).step_by(4) {
                 if let Ok(_) = execute!(
@@ -155,6 +145,7 @@ impl FlappyBird {
             }
         }
 
+
         let bird_char = self.bird_chars[self.bird_frame];
         if let Ok(_) = execute!(
             io::stdout(),
@@ -162,11 +153,11 @@ impl FlappyBird {
             style::PrintStyledContent(bird_char.with(Color::Yellow))
         ) {}
 
-        // Draw obstacles
+
         for obstacle in &self.obstacles {
             let x = obstacle.x as u16;
             if x < self.width {
-                // Draw top part of obstacle
+
                 for y in 0..obstacle.gap_start {
                     let char = if y == obstacle.gap_start - 1 {
                         self.obstacle_top
@@ -181,7 +172,7 @@ impl FlappyBird {
                     ) {}
                 }
 
-                // Draw bottom part of obstacle
+
                 for y in obstacle.gap_end..self.height {
                     let char = if y == obstacle.gap_end {
                         self.obstacle_bottom
@@ -198,6 +189,7 @@ impl FlappyBird {
             }
         }
 
+
         let score_text = format!("Score: {}", self.score);
         if let Ok(_) = execute!(
             io::stdout(),
@@ -205,7 +197,7 @@ impl FlappyBird {
             style::PrintStyledContent(score_text.with(Color::White))
         ) {}
 
-        // Draw game over
+
         if self.game_over {
             let game_over_text = "GAME OVER - Press 'r' to restart or 'q' to quit";
             let x = (self.width.saturating_sub(game_over_text.len() as u16)) / 2;
@@ -218,6 +210,7 @@ impl FlappyBird {
 
         io::stdout().flush()
     }
+
     fn run(&mut self) -> io::Result<()> {
         let mut last_update = Instant::now();
 
@@ -226,7 +219,7 @@ impl FlappyBird {
             let dt = current_time.duration_since(last_update).as_secs_f32();
             last_update = current_time;
 
-            // Handle input
+
             if event::poll(Duration::from_millis(1))? {
                 if let Event::Key(KeyEvent { code, .. }) = event::read()? {
                     match code {
@@ -238,18 +231,18 @@ impl FlappyBird {
                 }
             }
 
-            // Update game state
+
             if !self.game_over {
                 self.update_bird(dt);
                 self.update_obstacles(dt);
             }
 
-            // Draw everything
+
             self.draw()?;
 
             self.animation_counter += 1;
             
-            // Cap frame rate
+
             std::thread::sleep(Duration::from_millis(10));
         }
 
@@ -257,11 +250,7 @@ impl FlappyBird {
     }
 }
 
-
-
-
 fn main() -> io::Result<()> {
-    // Setup terminal
     terminal::enable_raw_mode()?;
     execute!(
         io::stdout(),
@@ -269,11 +258,13 @@ fn main() -> io::Result<()> {
         cursor::Hide
     )?;
 
+
     let result = if let Ok(mut game) = FlappyBird::new() {
         game.run()
     } else {
         Ok(())
     };
+
 
     execute!(
         io::stdout(),
