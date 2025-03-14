@@ -66,6 +66,20 @@ impl FlappyBird {
             animation_counter: 0,
         })
     }
+
+
+
+    fn reset_game(&mut self) {
+        self.bird_y = self.height as f32 / 2.0;
+        self.bird_velocity = 0.0;
+        self.obstacles.clear();
+        self.new_obstacle();
+        self.score = 0;
+        self.game_over = false;
+        self.animation_counter = 0;
+    }
+
+    
 }
 
 
