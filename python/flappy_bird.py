@@ -30,3 +30,16 @@ class FlappyBird:
             curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)   # Score
             curses.init_pair(4, curses.COLOR_RED, curses.COLOR_BLACK)     # Game over
             curses.init_pair(5, curses.COLOR_CYAN, curses.COLOR_BLACK)
+
+
+    def reset_game(self):
+        self.bird_y = self.height // 2
+        self.bird_velocity = 0
+        
+        self.obstacles = []
+        self.new_obstacle()
+        
+        self.score = 0
+        self.game_over = False
+        self.last_update = time.time()
+        self.animation_counter = 0
