@@ -54,3 +54,22 @@ class FlappyBird:
             'passed': False
         }
         self.obstacles.append(obstacle)
+
+
+
+    def update_bird(self, dt):
+
+        self.bird_velocity += self.gravity * dt * 10
+        self.bird_y += self.bird_velocity
+        
+
+        if self.animation_counter % 5 == 0:
+            self.bird_frame = (self.bird_frame + 1) % len(self.bird_chars)
+        
+
+        if self.bird_y < 1:
+            self.bird_y = 1
+            self.bird_velocity = 0
+        elif self.bird_y >= self.height - 1:
+            self.bird_y = self.height - 1
+            self.game_over = True
