@@ -41,6 +41,35 @@ struct Obstacle {
     passed: bool,
 }
 
+
+impl FlappyBird {
+    fn new() -> io::Result<Self> {
+        let (width, height) = terminal::size()?;
+        
+        Ok(Self {
+            width,
+            height,
+            bird_x: width / 4,
+            bird_y: height as f32 / 2.0,
+            bird_velocity: 0.0,
+            bird_chars: vec![">", "^", ">"],
+            bird_frame: 0,
+            obstacle_char: "║",
+            obstacle_top: "╦",
+            obstacle_bottom: "╩",
+            obstacles: Vec::new(),
+            gap_size: 6,
+            gravity: 0.05,
+            flap_power: -0.3,
+            score: 0,
+            game_over: false,
+            animation_counter: 0,
+        })
+    }
+}
+
+
+
 fn main() {
 
 }
