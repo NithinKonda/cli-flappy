@@ -1,0 +1,9 @@
+rust/*/target
+rust/flappy_bird/target
+rust/flappy_bird/debug/
+rust/flappy_bird/target/
+
+**/*.rs.bk
+
+
+*.pdb
