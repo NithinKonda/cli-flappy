@@ -13,10 +13,11 @@ class FlappyBird:
         
         self.bird_char = ">"
         self.obstacle_char = "|"
-        self.gap_size = 6
-        self.gravity = 0.5  
-        self.flap_power = -2  
-        
+        self.gap_size = 2
+        self.gravity = 0.05
+        self.flap_power = -0.3  
+        self.bird_char_width = 1
+        self.obstacle_char_width = 1
         self.reset_game()
 
 
@@ -67,7 +68,8 @@ class FlappyBird:
                 self.score += 1
                 obstacle['passed'] = True
             
-            if (self.bird_x == int(obstacle['x']) and 
+            if (self.bird_x + self.bird_char_width >= int(obstacle['x']) and 
+                self.bird_x <= int(obstacle['x']) + self.obstacle_char_width and 
                 (self.bird_y < obstacle['gap_start'] or self.bird_y >= obstacle['gap_end'])):
                 self.game_over = True
         
