@@ -259,6 +259,28 @@ impl FlappyBird {
 
 
 
-fn main() {
 
+fn main() -> io::Result<()> {
+    // Setup terminal
+    terminal::enable_raw_mode()?;
+    execute!(
+        io::stdout(),
+        terminal::EnterAlternateScreen,
+        cursor::Hide
+    )?;
+
+    let result = if let Ok(mut game) = FlappyBird::new() {
+        game.run()
+    } else {
+        Ok(())
+    };
+
+    execute!(
+        io::stdout(),
+        terminal::LeaveAlternateScreen,
+        cursor::Show
+    )?;
+    terminal::disable_raw_mode()?;
+
+    result
 }
