@@ -90,6 +90,27 @@ impl FlappyBird {
             passed: false,
         });
     }
+
+
+
+    fn update_bird(&mut self, dt: f32) {
+        self.bird_velocity += self.gravity * dt * 10.0;
+        self.bird_y += self.bird_velocity;
+
+        if self.animation_counter % 5 == 0 {
+            self.bird_frame = (self.bird_frame + 1) % self.bird_chars.len();
+        }
+
+        if self.bird_y < 1.0 {
+            self.bird_y = 1.0;
+            self.bird_velocity = 0.0;
+        } else if self.bird_y >= self.height as f32 - 1.0 {
+            self.bird_y = self.height as f32 - 1.0;
+            self.game_over = true;
+        }
+    }
+
+    
 }
 
 
