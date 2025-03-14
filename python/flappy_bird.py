@@ -133,3 +133,11 @@ class FlappyBird:
             
 
             time.sleep(max(0.01 - (time.time() - current_time), 0))
+
+
+
+def main():
+    curses.wrapper(lambda screen: FlappyBird(screen).run())
+
+if __name__ == "__main__":
+    main()
