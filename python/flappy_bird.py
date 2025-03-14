@@ -156,4 +156,23 @@ class FlappyBird:
                                 self.screen.addstr(y, x, char)
                         except curses.error:
                             pass
+         score_text = f"Score: {self.score}"
+        try:
+            if curses.has_colors():
+                self.screen.addstr(0, 0, score_text, curses.color_pair(3))
+            else:
+                self.screen.addstr(0, 0, score_text)
+        except curses.error:
+            pass
+        if self.game_over:
+            game_over_text = "GAME OVER - Press 'r' to restart or 'q' to quit"
+            x = max(0, (self.width - len(game_over_text)) // 2)
+            try:
+                if curses.has_colors():
+                    self.screen.addstr(self.height // 2, x, game_over_text, curses.color_pair(4))
+                else:
+                    self.screen.addstr(self.height // 2, x, game_over_text)
+            except curses.error:
+                pass
         
+        self.screen.refresh()
