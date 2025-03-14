@@ -131,8 +131,6 @@ class FlappyBird:
                 self.screen.addstr(int(self.bird_y), self.bird_x, bird_char)
         except curses.error:
             pass
-        
-        # Draw obstacles
         for obstacle in self.obstacles:
             x = int(obstacle['x'])
             if 0 <= x < self.width:
@@ -147,3 +145,15 @@ class FlappyBird:
                                 self.screen.addstr(y, x, char)
                         except curses.error:
                             pass
+
+                for y in range(obstacle['gap_end'], self.height):
+                    if 0 <= y < self.height:
+                        try:
+                            char = self.obstacle_bottom if y == obstacle['gap_end'] else self.obstacle_char
+                            if curses.has_colors():
+                                self.screen.addstr(y, x, char, curses.color_pair(2))
+                            else:
+                                self.screen.addstr(y, x, char)
+                        except curses.error:
+                            pass
+        
