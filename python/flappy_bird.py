@@ -176,3 +176,24 @@ class FlappyBird:
                 pass
         
         self.screen.refresh()
+
+
+
+    def run(self):
+        while True:
+            current_time = time.time()
+            dt = current_time - self.last_update
+            self.last_update = current_time
+            key = self.screen.getch()
+            if key == ord('q'):
+                break
+            elif key == ord('r') and self.game_over:
+                self.reset_game()
+            elif (key == ord(' ') or key == curses.KEY_UP) and not self.game_over:
+                self.flap()
+            if not self.game_over:
+                self.update_bird(dt)
+                self.update_obstacles(dt)
+            self.draw()
+            self.animation_counter += 1
+            time.sleep(max(0.01 - (time.time() - current_time), 0))
