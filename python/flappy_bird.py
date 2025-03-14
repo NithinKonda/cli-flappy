@@ -197,3 +197,10 @@ class FlappyBird:
             self.draw()
             self.animation_counter += 1
             time.sleep(max(0.01 - (time.time() - current_time), 0))
+
+
+def main():
+    curses.wrapper(lambda screen: FlappyBird(screen).run())
+
+if __name__ == "__main__":
+    main()
