@@ -79,7 +79,17 @@ impl FlappyBird {
         self.animation_counter = 0;
     }
 
-    
+    fn new_obstacle(&mut self) {
+        let mut rng = rand::thread_rng();
+        let gap_start = rng.gen_range(3..self.height - self.gap_size - 3);
+        
+        self.obstacles.push(Obstacle {
+            x: self.width as f32 - 1.0,
+            gap_start,
+            gap_end: gap_start + self.gap_size,
+            passed: false,
+        });
+    }
 }
 
 
