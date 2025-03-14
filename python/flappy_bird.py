@@ -14,7 +14,7 @@ class FlappyBird:
         self.obstacle_char = "║"
         self.obstacle_top = "╦"
         self.obstacle_bottom = "╩"
-        self.gap_size = 3
+        self.gap_size = 6
         self.gravity = 0.05
         self.flap_power = -0.3
         self.bird_x = self.width // 4
@@ -156,7 +156,7 @@ class FlappyBird:
                                 self.screen.addstr(y, x, char)
                         except curses.error:
                             pass
-         score_text = f"Score: {self.score}"
+        score_text = f"Score: {self.score}"
         try:
             if curses.has_colors():
                 self.screen.addstr(0, 0, score_text, curses.color_pair(3))
