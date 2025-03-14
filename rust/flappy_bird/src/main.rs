@@ -34,7 +34,12 @@ struct FlappyBird {
 }
 
 
-
+struct Obstacle {
+    x: f32,
+    gap_start: u16,
+    gap_end: u16,
+    passed: bool,
+}
 
 fn main() {
 
