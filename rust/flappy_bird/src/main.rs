@@ -155,7 +155,48 @@ impl FlappyBird {
             }
         }
 
-        
+        let bird_char = self.bird_chars[self.bird_frame];
+        if let Ok(_) = execute!(
+            io::stdout(),
+            cursor::MoveTo(self.bird_x, self.bird_y as u16),
+            style::PrintStyledContent(bird_char.with(Color::Yellow))
+        ) {}
+
+        // Draw obstacles
+        for obstacle in &self.obstacles {
+            let x = obstacle.x as u16;
+            if x < self.width {
+                // Draw top part of obstacle
+                for y in 0..obstacle.gap_start {
+                    let char = if y == obstacle.gap_start - 1 {
+                        self.obstacle_top
+                    } else {
+                        self.obstacle_char
+                    };
+                    
+                    if let Ok(_) = execute!(
+                        io::stdout(),
+                        cursor::MoveTo(x, y),
+                        style::PrintStyledContent(char.with(Color::Green))
+                    ) {}
+                }
+
+                // Draw bottom part of obstacle
+                for y in obstacle.gap_end..self.height {
+                    let char = if y == obstacle.gap_end {
+                        self.obstacle_bottom
+                    } else {
+                        self.obstacle_char
+                    };
+                    
+                    if let Ok(_) = execute!(
+                        io::stdout(),
+                        cursor::MoveTo(x, y),
+                        style::PrintStyledContent(char.with(Color::Green))
+                    ) {}
+                }
+            }
+        }
 }
 
 
