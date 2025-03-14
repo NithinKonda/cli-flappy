@@ -103,3 +103,14 @@ class FlappyBird:
 
     def flap(self):
         self.bird_velocity = self.flap_power
+
+
+    def draw_background(self):
+        if curses.has_colors():
+            for y in range(self.height):
+                for x in range(0, self.width, 4):
+                    if 0 <= x < self.width and 0 <= y < self.height:
+                        try:
+                            self.screen.addch(y, x, '·', curses.color_pair(5))
+                        except curses.error:
+                            pass
