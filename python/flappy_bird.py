@@ -55,3 +55,23 @@ class FlappyBird:
         elif self.bird_y >= self.height - 1:
             self.bird_y = self.height - 1
             self.game_over = True
+
+
+    def update_obstacles(self, dt):
+        speed = 15 * dt
+        
+        for obstacle in self.obstacles:
+            obstacle['x'] -= speed
+            
+            if not obstacle['passed'] and obstacle['x'] < self.bird_x:
+                self.score += 1
+                obstacle['passed'] = True
+            
+            if (self.bird_x == int(obstacle['x']) and 
+                (self.bird_y < obstacle['gap_start'] or self.bird_y >= obstacle['gap_end'])):
+                self.game_over = True
+        
+        self.obstacles = [o for o in self.obstacles if o['x'] > 0]
+        
+        if len(self.obstacles) == 0 or self.obstacles[-1]['x'] < self.width - 20:
+            self.new_obstacle()
