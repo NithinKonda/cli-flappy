@@ -110,7 +110,31 @@ impl FlappyBird {
         }
     }
 
-    
+    fn update_obstacles(&mut self, dt: f32) {
+        let speed = 15.0 * dt;
+
+        for obstacle in &mut self.obstacles {
+            obstacle.x -= speed;
+
+            if !obstacle.passed && obstacle.x < self.bird_x as f32 {
+                self.score += 1;
+                obstacle.passed = true;
+            }
+
+            if self.bird_x >= obstacle.x as u16
+                && self.bird_x <= obstacle.x as u16 + 1
+                && (self.bird_y as u16 < obstacle.gap_start || self.bird_y as u16 >= obstacle.gap_end)
+            {
+                self.game_over = true;
+            }
+        }
+
+        self.obstacles.retain(|o| o.x > 0.0);
+
+        if self.obstacles.is_empty() || self.obstacles.last().unwrap().x < self.width as f32 - 20.0 {
+            self.new_obstacle();
+        }
+    }
 }
 
 
