@@ -20,3 +20,13 @@ class FlappyBird:
         self.bird_x = self.width // 4
         self.reset_game()
         self.setup_colors()
+
+
+    def setup_colors(self):
+        if curses.has_colors():
+            curses.start_color()
+            curses.init_pair(1, curses.COLOR_YELLOW, curses.COLOR_BLACK)  # Bird
+            curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_BLACK)   # Obstacles
+            curses.init_pair(3, curses.COLOR_WHITE, curses.COLOR_BLACK)   # Score
+            curses.init_pair(4, curses.COLOR_RED, curses.COLOR_BLACK)     # Game over
+            curses.init_pair(5, curses.COLOR_CYAN, curses.COLOR_BLACK)
