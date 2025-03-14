@@ -88,12 +88,10 @@ class FlappyBird:
         
         for obstacle in self.obstacles:
             x = int(obstacle['x'])
-            if 0 <= x < self.width:
+            if 0 <= x < self.width:  # Check if x is within bounds
                 for y in range(obstacle['gap_start']):
-                    self.screen.addstr(y, x, self.obstacle_char)
-                
-                for y in range(obstacle['gap_end'], self.height):
-                    self.screen.addstr(y, x, self.obstacle_char)
+                    if 0 <= y < self.height:  # Check if y is within bounds
+                        self.screen.addstr(y, x, self.obstacle_char)
         
         self.screen.addstr(0, 0, f"Score: {self.score}")
         
