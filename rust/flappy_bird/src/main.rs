@@ -135,6 +135,27 @@ impl FlappyBird {
             self.new_obstacle();
         }
     }
+
+
+    fn flap(&mut self) {
+        self.bird_velocity = self.flap_power;
+    }
+
+    fn draw(&self) -> io::Result<()> {
+        execute!(io::stdout(), terminal::Clear(ClearType::All))?;
+
+        // Draw background dots
+        for y in 0..self.height {
+            for x in (0..self.width).step_by(4) {
+                if let Ok(_) = execute!(
+                    io::stdout(),
+                    cursor::MoveTo(x, y),
+                    style::PrintStyledContent("·".with(Color::Cyan))
+                ) {}
+            }
+        }
+
+        
 }
 
 
