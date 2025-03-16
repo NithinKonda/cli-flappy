@@ -65,6 +65,7 @@ python flappy_bird.py
 ### Rust
 ```bash
 cd rust
+cd flappy_bird
 cargo run
 ```
 
