@@ -89,3 +89,20 @@ func (fb *FlappyBird) NewObstacle() {
 	
 	fb.obstacles = append(fb.obstacles, obstacle)
 }
+
+func (fb *FlappyBird) UpdateBird(dt float64) {
+	fb.birdVelocity += fb.gravity * dt * 10
+	fb.birdY += fb.birdVelocity
+	
+	if fb.animationCounter%5 == 0 {
+		fb.birdFrame = (fb.birdFrame + 1) % len(fb.birdChars)
+	}
+	
+	if fb.birdY < 1 {
+		fb.birdY = 1
+		fb.birdVelocity = 0
+	} else if fb.birdY >= float64(fb.height-1) {
+		fb.birdY = float64(fb.height - 1)
+		fb.gameOver = true
+	}
+}
