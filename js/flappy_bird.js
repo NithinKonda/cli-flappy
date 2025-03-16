@@ -63,4 +63,16 @@ class FlappyBird {
         this.lastUpdate = Date.now();
         this.animationCounter = 0;
       }
+
+
+      newObstacle() {
+        const gapStart = 3 + Math.floor(Math.random() * (this.height - this.gapSize - 6));
+        
+        this.obstacles.push({
+          x: this.width - 1,
+          gapStart: gapStart,
+          gapEnd: gapStart + this.gapSize,
+          passed: false
+        });
+      }
 }
