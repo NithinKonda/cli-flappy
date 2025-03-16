@@ -33,18 +33,60 @@ You can modify the game mechanics by changing the following variables in the sou
 ## Directory Structure
 
 ```
-cli-flappy/
-├── python/
-├── rust/
-├── go/
+CLI-FLAPPY/
 ├── c/
+│   └── flappy_bird.c
 ├── cpp/
+│   └── flappy_bird.cpp
+├── go/
+│   ├── go.mod
+│   ├── go.sum
+│   └── main.go
+├── python/
+│   └── flappy_bird.py
+├── rust/
+│   ├── src/
+│   │   └── main.rs
+│   ├── target/
+│   ├── Cargo.lock
+│   ├── Cargo.toml
+│   └── .gitignore
 └── README.md
 ```
 
-## Installation & Running
+## Running Instructions
 
-See the README in each language directory for specific instructions on how to compile and run each version.
+### Python
+```bash
+cd python
+python flappy_bird.py
+```
+
+### Rust
+```bash
+cd rust
+cargo run
+```
+
+### Go
+```bash
+cd go
+go run main.go
+```
+
+### C
+```bash
+cd c
+gcc flappy_bird.c -o flappy_bird
+./flappy_bird
+```
+
+### C++
+```bash
+cd cpp
+g++ flappy_bird.cpp -o flappy_bird
+./flappy_bird
+```
 
 ## Purpose
 
