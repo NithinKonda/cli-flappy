@@ -137,3 +137,18 @@ func (fb *FlappyBird) UpdateObstacles(dt float64) {
 		fb.NewObstacle()
 	}
 }
+
+
+func (fb *FlappyBird) Flap() {
+	fb.birdVelocity = fb.flapPower
+}
+
+func (fb *FlappyBird) DrawBackground() {
+	bgStyle := tcell.StyleDefault.Foreground(tcell.ColorCyan)
+	
+	for y := 0; y < fb.height; y++ {
+		for x := 0; x < fb.width; x += 4 {
+			fb.screen.SetContent(x, y, '·', nil, bgStyle)
+		}
+	}
+}
