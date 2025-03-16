@@ -75,4 +75,26 @@ class FlappyBird {
           passed: false
         });
       }
+
+
+      flap() {
+        this.birdVelocity = this.flapPower;
+      }
+      
+      updateBird(dt) {
+        this.birdVelocity += this.gravity * dt * 10;
+        this.birdY += this.birdVelocity;
+        
+        if (this.animationCounter % 5 === 0) {
+          this.birdFrame = (this.birdFrame + 1) % this.birdChars.length;
+        }
+        
+        if (this.birdY < 1) {
+          this.birdY = 1;
+          this.birdVelocity = 0;
+        } else if (this.birdY >= this.height - 1) {
+          this.birdY = this.height - 1;
+          this.gameOver = true;
+        }
+      }
 }
