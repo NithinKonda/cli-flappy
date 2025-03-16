@@ -53,8 +53,8 @@ func NewFlappyBird(screen tcell.Screen) *FlappyBird {
 		obstacleTop:    '╦',
 		obstacleBottom: '╩',
 		gapSize:        6,
-		gravity:        0.05,
-		flapPower:      -0.3,
+		gravity:        0.1,
+		flapPower:      -0.7,
 		lastUpdate:     time.Now(),
 	}
 
