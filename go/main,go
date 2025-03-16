@@ -75,3 +75,17 @@ func (fb *FlappyBird) ResetGame() {
 	fb.lastUpdate = time.Now()
 	fb.animationCounter = 0
 }
+
+
+func (fb *FlappyBird) NewObstacle() {
+	gapStart := rand.Intn(fb.height-fb.gapSize-6) + 3
+	
+	obstacle := Obstacle{
+		X:        float64(fb.width - 1),
+		GapStart: gapStart,
+		GapEnd:   gapStart + fb.gapSize,
+		Passed:   false,
+	}
+	
+	fb.obstacles = append(fb.obstacles, obstacle)
+}
