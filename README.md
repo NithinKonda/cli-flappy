@@ -51,6 +51,8 @@ CLI-FLAPPY/
 │   ├── Cargo.lock
 │   ├── Cargo.toml
 │   └── .gitignore
+|-- js/
+|   └── flappy_bird.js
 └── README.md
 ```
 
@@ -74,6 +76,17 @@ cargo run
 cd go
 go run main.go
 ```
+
+
+### Js
+```bash
+cd js
+npm install
+npm start
+# or
+node flappy_bird.js
+```
+
 
 ### C
 ```bash
