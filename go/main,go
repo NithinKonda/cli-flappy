@@ -63,3 +63,15 @@ func NewFlappyBird(screen tcell.Screen) *FlappyBird {
 	fb.ResetGame()
 	return fb
 }
+
+
+func (fb *FlappyBird) ResetGame() {
+	fb.birdY = float64(fb.height / 2)
+	fb.birdVelocity = 0
+	fb.obstacles = []Obstacle{}
+	fb.NewObstacle()
+	fb.score = 0
+	fb.gameOver = false
+	fb.lastUpdate = time.Now()
+	fb.animationCounter = 0
+}
