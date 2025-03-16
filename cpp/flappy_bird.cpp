@@ -1,10 +1,3 @@
-/*
- * Flappy Bird CLI Game in C++
- *
- * Compile with:
- * g++ -o flappy_bird_cpp flappy_bird.cpp -lncurses
- */
-
 #include <ncurses.h>
 #include <cstdlib>
 #include <ctime>
@@ -12,6 +5,10 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+#include <iostream>
+#include <ostream>
+#include <vector>
+#include <string>
 #include <algorithm>
 
 class Obstacle
@@ -34,7 +31,7 @@ private:
     int birdX;
     float birdY;
     float birdVelocity;
-    std::vector<std::string> birdChars;
+    std::vector<std::string> birdChars = {">", "^", ">"};
     int birdFrame;
     std::string obstacleChar;
     std::string obstacleTop;
