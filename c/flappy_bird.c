@@ -107,3 +107,22 @@ float get_delta_time(GameState* game) {
     game->last_update = current_time;
     return dt;
 }
+
+
+
+void update_bird(GameState* game, float dt) {
+    game->bird_velocity += game->gravity * dt * 10;
+    game->bird_y += game->bird_velocity;
+    
+    if (game->animation_counter % 5 == 0) {
+        game->bird_frame = (game->bird_frame + 1) % 3;
+    }
+    
+    if (game->bird_y < 1) {
+        game->bird_y = 1;
+        game->bird_velocity = 0;
+    } else if (game->bird_y >= game->height - 1) {
+        game->bird_y = game->height - 1;
+        game->game_over = 1;
+    }
+}
