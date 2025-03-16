@@ -1,0 +1,17 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"time"
+
+	"github.com/gdamore/tcell/v2"
+)
+
+type Obstacle struct {
+	X        float64
+	GapStart int
+	GapEnd   int
+	Passed   bool
+}
