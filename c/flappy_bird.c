@@ -64,3 +64,21 @@ void reset_game(GameState* game) {
     game->obstacles[0].passed = 0;
     game->num_obstacles = 1;
 }
+
+void init_game(GameState* game) {
+    getmaxyx(stdscr, game->height, game->width);
+    
+    game->bird_x = game->width / 4;
+    game->bird_chars[0] = ">";
+    game->bird_chars[1] = "^";
+    game->bird_chars[2] = ">";
+    game->bird_frame = 0;
+    game->obstacle_char = "║";
+    game->obstacle_top = "╦";
+    game->obstacle_bottom = "╩";
+    game->gap_size = 6;
+    game->gravity = 0.05;
+    game->flap_power = -0.3;
+    
+    reset_game(game);
+}
