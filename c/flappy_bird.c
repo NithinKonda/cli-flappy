@@ -244,3 +244,58 @@ void draw_game(GameState* game) {
     
     refresh();
 }
+
+
+
+int main() {
+    initscr();
+    cbreak();
+    noecho();
+    keypad(stdscr, TRUE);
+    curs_set(0);  // Hide cursor
+    timeout(0);   // Non-blocking getch
+    
+    srand(time(NULL));
+    
+    init_colors();
+    
+    GameState game;
+    init_game(&game);
+    
+    int running = 1;
+    while (running) {
+        int ch = getch();
+        switch (ch) {
+            case 'q':
+                running = 0;
+                break;
+            case 'r':
+                if (game.game_over) {
+                    reset_game(&game);
+                }
+                break;
+            case ' ':
+            case KEY_UP:
+                if (!game.game_over) {
+                    flap(&game);
+                }
+                break;
+        }
+        
+        float dt = get_delta_time(&game);
+        
+        if (!game.game_over) {
+            update_bird(&game, dt);
+            update_obstacles(&game, dt);
+        }
+        
+        draw_game(&game);
+        
+        game.animation_counter++;
+        
+        usleep(10000);  // 10ms = 100 FPS max
+    }
+    
+    endwin();
+    return 0;
+}
