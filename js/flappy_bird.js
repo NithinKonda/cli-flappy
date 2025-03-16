@@ -146,4 +146,103 @@ class FlappyBird {
           bg: 'black'
         }, attrs);
       }
+
+
+
+      draw() {
+        // Clear the screen
+        this.screen.clearRegion(0, this.width, 0, this.height);
+        
+        // Draw background
+        this.drawBackground();
+        
+        // Draw bird
+        const birdChar = this.birdChars[this.birdFrame];
+        const birdY = Math.floor(this.birdY);
+        
+        if (birdY >= 0 && birdY < this.height && this.birdX >= 0 && this.birdX < this.width) {
+          this.screen.fillRegion(
+            this.getColorAttrs({ fg: 'yellow' }),
+            birdChar,
+            this.birdX,
+            this.birdX + 1,
+            birdY,
+            birdY + 1
+          );
+        }
+        
+        // Draw obstacles
+        for (const obstacle of this.obstacles) {
+          const x = Math.floor(obstacle.x);
+          if (x >= 0 && x < this.width) {
+            // Draw top part of the obstacle
+            for (let y = 0; y < obstacle.gapStart; y++) {
+              if (y >= 0 && y < this.height) {
+                const char = (y === obstacle.gapStart - 1) ? this.obstacleTop : this.obstacleChar;
+                this.screen.fillRegion(
+                  this.getColorAttrs({ fg: 'green' }),
+                  char,
+                  x,
+                  x + 1,
+                  y,
+                  y + 1
+                );
+              }
+            }
+            
+            // Draw bottom part of the obstacle
+            for (let y = obstacle.gapEnd; y < this.height; y++) {
+              if (y >= 0 && y < this.height) {
+                const char = (y === obstacle.gapEnd) ? this.obstacleBottom : this.obstacleChar;
+                this.screen.fillRegion(
+                  this.getColorAttrs({ fg: 'green' }),
+                  char,
+                  x,
+                  x + 1,
+                  y,
+                  y + 1
+                );
+              }
+            }
+          }
+        }
+        
+        // Draw score
+        const scoreText = `Score: ${this.score}`;
+        for (let i = 0; i < scoreText.length; i++) {
+          if (i < this.width) {
+            this.screen.fillRegion(
+              this.getColorAttrs({ fg: 'white' }),
+              scoreText[i],
+              i,
+              i + 1,
+              0,
+              1
+            );
+          }
+        }
+        
+        // Draw game over message
+        if (this.gameOver) {
+          const gameOverText = "GAME OVER - Press 'r' to restart or 'q' to quit";
+          const x = Math.max(0, Math.floor((this.width - gameOverText.length) / 2));
+          const y = Math.floor(this.height / 2);
+          
+          for (let i = 0; i < gameOverText.length; i++) {
+            if (x + i < this.width) {
+              this.screen.fillRegion(
+                this.getColorAttrs({ fg: 'red' }),
+                gameOverText[i],
+                x + i,
+                x + i + 1,
+                y,
+                y + 1
+              );
+            }
+          }
+        }
+        
+        // Render the screen
+        this.screen.render();
+      }
 }
