@@ -51,7 +51,7 @@ public:
         getmaxyx(stdscr, height, width);
 
         birdX = width / 4;
-        birdChars = {">"s, "^"s, ">"s};
+        birdChars = {">", "^", ">"};
         birdFrame = 0;
         obstacleChar = "║";
         obstacleTop = "╦";
