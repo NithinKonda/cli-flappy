@@ -245,4 +245,33 @@ class FlappyBird {
         // Render the screen
         this.screen.render();
       }
+
+
+      
+  run() {
+    // Main game loop
+    const gameLoop = () => {
+      const currentTime = Date.now();
+      const dt = (currentTime - this.lastUpdate) / 1000; // Convert to seconds
+      this.lastUpdate = currentTime;
+      
+      if (!this.gameOver) {
+        this.updateBird(dt);
+        this.updateObstacles(dt);
+      }
+      
+      this.draw();
+      this.animationCounter++;
+      
+      // Schedule next frame
+      setTimeout(gameLoop, 10); // ~100 FPS
+    };
+    
+    // Start the game loop
+    gameLoop();
+  }
 }
+
+// Create and run the game
+const game = new FlappyBird(screen);
+game.run();
