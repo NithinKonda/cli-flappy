@@ -218,3 +218,70 @@ func (fb *FlappyBird) Draw() {
 	
 	fb.screen.Show()
 }
+
+
+func (fb *FlappyBird) Run() {
+
+	eventChan := make(chan tcell.Event)
+	go func() {
+		for {
+			eventChan <- fb.screen.PollEvent()
+		}
+	}()
+	
+	for {
+		currentTime := time.Now()
+		dt := currentTime.Sub(fb.lastUpdate).Seconds()
+		fb.lastUpdate = currentTime
+		
+
+		select {
+		case ev := <-eventChan:
+			switch ev := ev.(type) {
+			case *tcell.EventKey:
+				switch ev.Key() {
+				case tcell.KeyEscape, tcell.KeyCtrlC:
+					return
+				case tcell.KeyRune:
+					switch ev.Rune() {
+					case 'q':
+						return
+					case 'r':
+						if fb.gameOver {
+							fb.ResetGame()
+						}
+					case ' ':
+						if !fb.gameOver {
+							fb.Flap()
+						}
+					}
+				case tcell.KeyUp:
+					if !fb.gameOver {
+						fb.Flap()
+					}
+				}
+			case *tcell.EventResize:
+				fb.width, fb.height = fb.screen.Size()
+			}
+		default:
+
+		}
+		
+
+		if !fb.gameOver {
+			fb.UpdateBird(dt)
+			fb.UpdateObstacles(dt)
+		}
+		
+
+		fb.Draw()
+		
+		fb.animationCounter++
+		
+
+		sleep := time.Millisecond*10 - time.Since(currentTime)
+		if sleep > 0 {
+			time.Sleep(sleep)
+		}
+	}
+}
