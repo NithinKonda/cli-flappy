@@ -8,6 +8,7 @@ This project implements the same Flappy Bird game in different programming langu
 - Python
 - Rust
 - Go
+- Js
 - C
 - C++
 
@@ -51,7 +52,7 @@ CLI-FLAPPY/
 │   ├── Cargo.lock
 │   ├── Cargo.toml
 │   └── .gitignore
-|-- js/
+├── js/
 |   └── flappy_bird.js
 └── README.md
 ```
