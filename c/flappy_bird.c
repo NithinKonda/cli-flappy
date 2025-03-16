@@ -94,3 +94,16 @@ void new_obstacle(GameState* game) {
         game->num_obstacles++;
     }
 }
+
+
+
+float get_delta_time(GameState* game) {
+    struct timespec current_time;
+    clock_gettime(CLOCK_MONOTONIC, &current_time);
+    
+    float dt = (current_time.tv_sec - game->last_update.tv_sec) + 
+               (current_time.tv_nsec - game->last_update.tv_nsec) / 1000000000.0;
+    
+    game->last_update = current_time;
+    return dt;
+}
