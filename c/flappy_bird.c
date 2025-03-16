@@ -188,3 +188,59 @@ void draw_background(GameState* game) {
         attroff(COLOR_PAIR(5));
     }
 }
+
+
+void draw_game(GameState* game) {
+    clear();
+    
+
+    draw_background(game);
+    
+
+    const char* bird_char = game->bird_chars[game->bird_frame];
+    if (has_colors()) attron(COLOR_PAIR(1));
+    mvaddstr((int)game->bird_y, game->bird_x, bird_char);
+    if (has_colors()) attroff(COLOR_PAIR(1));
+    
+
+    if (has_colors()) attron(COLOR_PAIR(2));
+    for (int i = 0; i < game->num_obstacles; i++) {
+        int x = (int)game->obstacles[i].x;
+        if (x >= 0 && x < game->width) {
+
+            for (int y = 0; y < game->obstacles[i].gap_start; y++) {
+                const char* char_to_use = (y == game->obstacles[i].gap_start - 1) ? 
+                                         game->obstacle_top : game->obstacle_char;
+                mvaddstr(y, x, char_to_use);
+            }
+            
+
+            for (int y = game->obstacles[i].gap_end; y < game->height; y++) {
+                const char* char_to_use = (y == game->obstacles[i].gap_end) ? 
+                                         game->obstacle_bottom : game->obstacle_char;
+                mvaddstr(y, x, char_to_use);
+            }
+        }
+    }
+    if (has_colors()) attroff(COLOR_PAIR(2));
+    
+
+    char score_text[20];
+    sprintf(score_text, "Score: %d", game->score);
+    if (has_colors()) attron(COLOR_PAIR(3));
+    mvaddstr(0, 0, score_text);
+    if (has_colors()) attroff(COLOR_PAIR(3));
+    
+
+    if (game->game_over) {
+        const char* game_over_text = "GAME OVER - Press 'r' to restart or 'q' to quit";
+        int x = (game->width - strlen(game_over_text)) / 2;
+        if (x < 0) x = 0;
+        
+        if (has_colors()) attron(COLOR_PAIR(4));
+        mvaddstr(game->height / 2, x, game_over_text);
+        if (has_colors()) attroff(COLOR_PAIR(4));
+    }
+    
+    refresh();
+}
