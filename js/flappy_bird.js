@@ -127,4 +127,23 @@ class FlappyBird {
           this.newObstacle();
         }
       }
+
+
+      drawBackground() {
+
+        for (let y = 0; y < this.height; y++) {
+          for (let x = 0; x < this.width; x += 4) {
+            if (x < this.width && y < this.height) {
+              this.screen.fillRegion(this.getColorAttrs({ fg: 'cyan' }), '·', x, x + 1, y, y + 1);
+            }
+          }
+        }
+      }
+      
+      getColorAttrs(attrs = {}) {
+
+        return Object.assign({
+          bg: 'black'
+        }, attrs);
+      }
 }
