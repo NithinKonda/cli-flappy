@@ -166,3 +166,9 @@ void update_obstacles(GameState* game, float dt) {
         new_obstacle(game);
     }
 }
+
+
+
+void flap(GameState* game) {
+    game->bird_velocity = game->flap_power;
+}
