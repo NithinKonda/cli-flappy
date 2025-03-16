@@ -38,3 +38,28 @@ type FlappyBird struct {
 	lastUpdate      time.Time
 	animationCounter int
 }
+
+
+func NewFlappyBird(screen tcell.Screen) *FlappyBird {
+	width, height := screen.Size()
+	
+	fb := &FlappyBird{
+		screen:         screen,
+		width:          width,
+		height:         height,
+		birdX:          width / 4,
+		birdY:          float64(height / 2),
+		birdChars:      []rune{'>', '^', '>'},
+		birdFrame:      0,
+		obstacleChar:   '║',
+		obstacleTop:    '╦',
+		obstacleBottom: '╩',
+		gapSize:        6,
+		gravity:        0.05,
+		flapPower:      -0.3,
+		lastUpdate:     time.Now(),
+	}
+	
+	fb.ResetGame()
+	return fb
+}
