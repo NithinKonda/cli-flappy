@@ -172,3 +172,19 @@ void update_obstacles(GameState* game, float dt) {
 void flap(GameState* game) {
     game->bird_velocity = game->flap_power;
 }
+
+
+
+void draw_background(GameState* game) {
+    if (has_colors()) {
+        attron(COLOR_PAIR(5));
+        for (int y = 0; y < game->height; y++) {
+            for (int x = 0; x < game->width; x += 4) {
+                if (x < game->width && y < game->height) {
+                    mvaddch(y, x, '·');
+                }
+            }
+        }
+        attroff(COLOR_PAIR(5));
+    }
+}
