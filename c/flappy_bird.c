@@ -126,3 +126,43 @@ void update_bird(GameState* game, float dt) {
         game->game_over = 1;
     }
 }
+
+
+void update_obstacles(GameState* game, float dt) {
+    float speed = 15.0 * dt;
+    
+
+    int new_count = 0;
+    for (int i = 0; i < game->num_obstacles; i++) {
+        game->obstacles[i].x -= speed;
+        
+
+        if (!game->obstacles[i].passed && game->obstacles[i].x < game->bird_x) {
+            game->score++;
+            game->obstacles[i].passed = 1;
+        }
+        
+
+        if (game->bird_x >= (int)game->obstacles[i].x && 
+            game->bird_x <= (int)game->obstacles[i].x + 1 && 
+            ((int)game->bird_y < game->obstacles[i].gap_start || (int)game->bird_y >= game->obstacles[i].gap_end)) {
+            game->game_over = 1;
+        }
+        
+
+        if (game->obstacles[i].x > 0) {
+            if (i != new_count) {
+                game->obstacles[new_count] = game->obstacles[i];
+            }
+            new_count++;
+        }
+    }
+    
+    game->num_obstacles = new_count;
+    
+
+    if (game->num_obstacles == 0 || 
+        (game->num_obstacles > 0 && game->obstacles[game->num_obstacles-1].x < game->width - 20)) {
+        new_obstacle(game);
+    }
+}
