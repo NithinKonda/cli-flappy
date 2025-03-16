@@ -35,3 +35,15 @@ typedef struct {
     struct timespec last_update;
     int animation_counter;
 } GameState;
+
+
+void init_colors() {
+    if (has_colors()) {
+        start_color();
+        init_pair(1, COLOR_YELLOW, COLOR_BLACK);  // Bird
+        init_pair(2, COLOR_GREEN, COLOR_BLACK);   // Obstacles
+        init_pair(3, COLOR_WHITE, COLOR_BLACK);   // Score
+        init_pair(4, COLOR_RED, COLOR_BLACK);     // Game over
+        init_pair(5, COLOR_CYAN, COLOR_BLACK);    // Background
+    }
+}
