@@ -82,3 +82,15 @@ void init_game(GameState* game) {
     
     reset_game(game);
 }
+
+
+void new_obstacle(GameState* game) {
+    if (game->num_obstacles < MAX_OBSTACLES) {
+        int gap_start = rand() % (game->height - game->gap_size - 6) + 3;
+        game->obstacles[game->num_obstacles].x = game->width - 1;
+        game->obstacles[game->num_obstacles].gap_start = gap_start;
+        game->obstacles[game->num_obstacles].gap_end = gap_start + game->gap_size;
+        game->obstacles[game->num_obstacles].passed = 0;
+        game->num_obstacles++;
+    }
+}
