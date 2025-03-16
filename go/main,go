@@ -15,3 +15,26 @@ type Obstacle struct {
 	GapEnd   int
 	Passed   bool
 }
+
+
+type FlappyBird struct {
+	screen          tcell.Screen
+	width           int
+	height          int
+	birdX           int
+	birdY           float64
+	birdVelocity    float64
+	birdChars       []rune
+	birdFrame       int
+	obstacleChar    rune
+	obstacleTop     rune
+	obstacleBottom  rune
+	obstacles       []Obstacle
+	gapSize         int
+	gravity         float64
+	flapPower       float64
+	score           int
+	gameOver        bool
+	lastUpdate      time.Time
+	animationCounter int
+}
