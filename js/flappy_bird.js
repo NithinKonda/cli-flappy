@@ -97,4 +97,34 @@ class FlappyBird {
           this.gameOver = true;
         }
       }
+
+
+      updateObstacles(dt) {
+        const speed = 15 * dt;
+        
+        for (const obstacle of this.obstacles) {
+          obstacle.x -= speed;
+          
+          if (!obstacle.passed && obstacle.x < this.birdX) {
+            this.score++;
+            obstacle.passed = true;
+          }
+          
+          if (
+            this.birdX >= Math.floor(obstacle.x) &&
+            this.birdX <= Math.floor(obstacle.x) + 1 &&
+            (Math.floor(this.birdY) < obstacle.gapStart || Math.floor(this.birdY) >= obstacle.gapEnd)
+          ) {
+            this.gameOver = true;
+          }
+        }
+        
+        // Remove obstacles that have gone off screen
+        this.obstacles = this.obstacles.filter(o => o.x > 0);
+        
+        // Add new obstacle if needed
+        if (this.obstacles.length === 0 || this.obstacles[this.obstacles.length - 1].x < this.width - 20) {
+          this.newObstacle();
+        }
+      }
 }
