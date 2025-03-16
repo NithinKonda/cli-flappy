@@ -30,4 +30,26 @@ class FlappyBird {
       this.resetGame();
     }
 
+
+    setupInput() {
+
+        this.screen.key(['escape', 'q', 'C-c'], () => {
+          process.exit(0);
+        });
+        
+
+        this.screen.key([' ', 'up'], () => {
+          if (!this.gameOver) {
+            this.flap();
+          }
+        });
+        
+
+        this.screen.key(['r'], () => {
+          if (this.gameOver) {
+            this.resetGame();
+          }
+        });
+      }
+
 }
