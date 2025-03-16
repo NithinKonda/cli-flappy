@@ -52,4 +52,15 @@ class FlappyBird {
         });
       }
 
+
+      resetGame() {
+        this.birdY = Math.floor(this.height / 2);
+        this.birdVelocity = 0;
+        this.obstacles = [];
+        this.newObstacle();
+        this.score = 0;
+        this.gameOver = false;
+        this.lastUpdate = Date.now();
+        this.animationCounter = 0;
+      }
 }
