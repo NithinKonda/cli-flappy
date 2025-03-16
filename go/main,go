@@ -106,3 +106,34 @@ func (fb *FlappyBird) UpdateBird(dt float64) {
 		fb.gameOver = true
 	}
 }
+
+
+func (fb *FlappyBird) UpdateObstacles(dt float64) {
+	speed := 15.0 * dt
+	
+	for i := range fb.obstacles {
+		fb.obstacles[i].X -= speed
+		
+		if !fb.obstacles[i].Passed && fb.obstacles[i].X < float64(fb.birdX) {
+			fb.score++
+			fb.obstacles[i].Passed = true
+		}
+		
+		if fb.birdX >= int(fb.obstacles[i].X) && 
+		   fb.birdX <= int(fb.obstacles[i].X)+1 && 
+		   (int(fb.birdY) < fb.obstacles[i].GapStart || int(fb.birdY) >= fb.obstacles[i].GapEnd) {
+			fb.gameOver = true
+		}
+	}
+	var newObstacles []Obstacle
+	for _, o := range fb.obstacles {
+		if o.X > 0 {
+			newObstacles = append(newObstacles, o)
+		}
+	}
+	fb.obstacles = newObstacles
+	
+	if len(fb.obstacles) == 0 || fb.obstacles[len(fb.obstacles)-1].X < float64(fb.width-20) {
+		fb.NewObstacle()
+	}
+}
