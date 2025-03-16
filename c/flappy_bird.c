@@ -47,3 +47,20 @@ void init_colors() {
         init_pair(5, COLOR_CYAN, COLOR_BLACK);    // Background
     }
 }
+
+void reset_game(GameState* game) {
+    game->bird_y = game->height / 2;
+    game->bird_velocity = 0;
+    game->num_obstacles = 0;
+    game->score = 0;
+    game->game_over = 0;
+    clock_gettime(CLOCK_MONOTONIC, &game->last_update);
+    game->animation_counter = 0;
+    
+    int gap_start = rand() % (game->height - game->gap_size - 6) + 3;
+    game->obstacles[0].x = game->width - 1;
+    game->obstacles[0].gap_start = gap_start;
+    game->obstacles[0].gap_end = gap_start + game->gap_size;
+    game->obstacles[0].passed = 0;
+    game->num_obstacles = 1;
+}
