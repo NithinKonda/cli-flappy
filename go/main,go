@@ -152,3 +152,69 @@ func (fb *FlappyBird) DrawBackground() {
 		}
 	}
 }
+
+
+func (fb *FlappyBird) Draw() {
+	fb.screen.Clear()
+	
+
+	fb.DrawBackground()
+	
+
+	birdChar := fb.birdChars[fb.birdFrame]
+	birdStyle := tcell.StyleDefault.Foreground(tcell.ColorYellow)
+	fb.screen.SetContent(fb.birdX, int(fb.birdY), birdChar, nil, birdStyle)
+	
+
+	obstacleStyle := tcell.StyleDefault.Foreground(tcell.ColorGreen)
+	
+	for _, obstacle := range fb.obstacles {
+		x := int(obstacle.X)
+		if x >= 0 && x < fb.width {
+			// Draw top part
+			for y := 0; y < obstacle.GapStart; y++ {
+				char := fb.obstacleChar
+				if y == obstacle.GapStart-1 {
+					char = fb.obstacleTop
+				}
+				fb.screen.SetContent(x, y, char, nil, obstacleStyle)
+			}
+			
+
+			for y := obstacle.GapEnd; y < fb.height; y++ {
+				char := fb.obstacleChar
+				if y == obstacle.GapEnd {
+					char = fb.obstacleBottom
+				}
+				fb.screen.SetContent(x, y, char, nil, obstacleStyle)
+			}
+		}
+	}
+	
+
+	scoreText := fmt.Sprintf("Score: %d", fb.score)
+	scoreStyle := tcell.StyleDefault.Foreground(tcell.ColorWhite)
+	
+	for i, r := range scoreText {
+		fb.screen.SetContent(i, 0, r, nil, scoreStyle)
+	}
+	
+
+	if fb.gameOver {
+		gameOverText := "GAME OVER - Press 'r' to restart or 'q' to quit"
+		gameOverStyle := tcell.StyleDefault.Foreground(tcell.ColorRed)
+		
+		x := (fb.width - len(gameOverText)) / 2
+		if x < 0 {
+			x = 0
+		}
+		
+		for i, r := range gameOverText {
+			if x+i < fb.width {
+				fb.screen.SetContent(x+i, fb.height/2, r, nil, gameOverStyle)
+			}
+		}
+	}
+	
+	fb.screen.Show()
+}
