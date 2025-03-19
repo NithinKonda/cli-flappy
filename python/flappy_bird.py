@@ -14,9 +14,9 @@ class FlappyBird:
         self.obstacle_char = "║"
         self.obstacle_top = "╦"
         self.obstacle_bottom = "╩"
-        self.gap_size = 6
-        self.gravity = 0.05
-        self.flap_power = -0.3
+        self.gap_size = 6 #optimal 6
+        self.gravity = 0.05 #optimal 0.05
+        self.flap_power = -0.3 #optimal -0.3
         self.bird_x = self.width // 4
         self.reset_game()
         self.setup_colors()
