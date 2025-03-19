@@ -6,5 +6,5 @@ js/node_modules
 js/package-lock.json
 **/*.rs.bk
 
-
+.env
 *.pdb
